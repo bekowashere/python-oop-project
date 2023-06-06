@@ -68,15 +68,74 @@ class Employee(Person):
         return True
 
     def __calculate_carfare(self):
-        weekly_expense = Employee.daily_carfare * self.working_days
+        weekly_expense = self.daily_carfare * self.working_days
         monthly_expense = weekly_expense * 4
         return monthly_expense
 
     def __calculate_food_allowance(self):
-        weekly_expense = Employee.daily_food_allowance * self.working_days
+        weekly_expense = self.daily_food_allowance * self.working_days
         monthly_expense = weekly_expense * 4
         return monthly_expense
 
     def total_cost(self):
         # without insurance
         return self.salary + self.__calculate_carfare() + self.__calculate_food_allowance()
+
+
+class Developer(Employee):
+    number_of_developers = 0
+    all_developers = []
+
+    raise_amount = 1.25
+
+    daily_food_allowance = 75
+    daily_carfare = 25
+
+    def __init__(self, first_name: str, last_name: str, birthdate: datetime, birthplace: str,
+                 blood_group: str, identity_number: str, salary: int, company: str, working_days: int = 5,
+                 programming_language: str = None):
+        super().__init__(first_name, last_name, birthdate, birthplace, blood_group, identity_number, salary, company,
+                         working_days)
+
+        self.programming_language = programming_language
+
+        Developer.all_developers.append(self)
+        Developer.number_of_developers += 1
+
+
+class Manager(Employee):
+    number_of_managers = 0
+    all_managers = []
+
+    raise_amount = 1.50
+
+    daily_food_allowance = 100
+    daily_carfare = 50
+
+    def __init__(self, first_name: str, last_name: str, birthdate: datetime, birthplace: str,
+                 blood_group: str, identity_number: str, salary: int, company: str, working_days: int = 5,
+                 under_employees: list = None):
+        super().__init__(first_name, last_name, birthdate, birthplace, blood_group, identity_number, salary, company,
+                         working_days)
+
+        if under_employees is None:
+            self.under_employees = []
+        else:
+            self.under_employees = under_employees
+
+        Manager.all_managers.append(self)
+        Manager.number_of_managers += 1
+
+    def add_employee(self, emp):
+        if emp not in self.under_employees:
+            self.under_employees.append(emp)
+            return print(f'{emp.fullname} successfully added')
+        else:
+            return print(f'{emp.fullname} already exists')
+
+    def remove_employee(self, emp):
+        if emp in self.under_employees:
+            self.under_employees.remove(emp)
+            return print(f'{emp.fullname} successfully removed')
+        else:
+            return print(f'{emp.fullname} does not exists')

@@ -1,5 +1,5 @@
 import csv
-from datetime import datetime
+import datetime
 
 
 class Person:
@@ -19,7 +19,12 @@ class Person:
         self.__birthplace = birthplace
         self.__blood_group = blood_group
         self.__identity_number = identity_number
+        self.check_unique_identity_number()
 
+    def check_unique_identity_number(self):
+        for obj in Person.all:
+            if obj is not self and obj.identity_number == self.__identity_number:
+                raise ValueError(f"The same identity number is used: {self.identity_number}")
         Person.all.append(self)
         Person.number_of_person += 1
 
@@ -37,8 +42,8 @@ class Person:
 
     @birthdate.setter
     def birthdate(self, new_date):
-        value = datetime.strptime(new_date, '%d/%m/%y')
-        if value > datetime.today():
+        value = datetime.datetime.strptime(new_date, '%d/%m/%y')
+        if value > datetime.datetime.today():
             raise Exception("Invalid date")
         else:
             self.__birthdate = value
@@ -61,7 +66,7 @@ class Person:
 
     @property
     def age(self):
-        result = datetime.today().year - self.__birthdate.year
+        result = datetime.datetime.today().year - self.__birthdate.year
         return result
 
     @property
@@ -82,7 +87,7 @@ class Person:
             cls(
                 first_name=_person.get('first_name'),
                 last_name=_person.get('last_name'),
-                birthdate=datetime.strptime(_person.get('birthdate'), '%d/%m/%y'),
+                birthdate=datetime.datetime.strptime(_person.get('birthdate'), '%d/%m/%y'),
                 birthplace=_person.get('birthplace'),
                 blood_group=_person.get('blood_group'),
                 identity_number=_person.get('identity_number'),

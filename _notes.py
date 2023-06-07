@@ -1,25 +1,5 @@
 # from person import Person
 # from datetime import datetime
-
-# person1 = Person('Berke', 'Karataş', datetime(1997, 2, 1), 'Istanbul', 'B Rh+', '12345678')
-# print(Person.number_of_person)
-# print(Person.age_of_majority)
-# print(Person.get_birth_year(person1))
-# print(person1)
-# print(person1.fullname)
-# print(person1.email)
-# print(person1.first_name)
-# print(person1.last_name)
-# print(person1.age)
-# print(person1.birthdate) # 1997-01-02 00:00:00
-# person1.birthdate = '01/02/22'
-# person1.birthplace = 'Ankara'
-# print(person1.blood_group)
-# print(person1.identity_number)
-# print(person1.is_major())
-# print(person1.send_email())
-# print(Person.all)
-# -----------------------------------------------------------------------------------------------
 """
 print(Person.number_of_person)  # 2
 print(Employee.number_of_person)  # 2
@@ -59,4 +39,26 @@ print(emp1.salary)  # 11000
 
 print(emp1.total_cost())  # 6680
 
+"""
+
+"""
+date
+# pay_day = 2
+# datetime.datetime(2023, 12, 1)  friday -> 2023-12-04 00:00:00
+# datetime.datetime(2023, 12, 2)  saturday -> 2023-12-04 00:00:00
+# datetime.datetime(2023, 12, 3)  sunday -> 2023-12-04 00:00:00
+# datetime.datetime(2023, 12, 4)  monday -> 2023-12-04 00:00:00
+# datetime.datetime(2023, 12, 5)  tuesday -> 2024-01-02 00:00:00
+
+# pay_day = 6
+# datetime.datetime(2023, 12, 6)  wednesday -> 2023-12-06 00:00:00
+# datetime.datetime(2023, 12, 7)  thursday -> 2024-01-08 00:00:00
+# datetime.datetime(2023, 12, 8)  friday -> 2024-01-08 00:00:00
+# datetime.datetime(2023, 12, 9)  saturday -> 2024-01-08 00:00:00
+# datetime.datetime(2023, 12, 10)  sunday -> 2024-01-08 00:00:00
+
+# pay_day = 30
+# datetime.datetime(2023, 2, 10) -> ValueError: day is out of range for month
+
+print(emp1.next_pay_day(datetime.datetime(2023, 2, 10)))
 """

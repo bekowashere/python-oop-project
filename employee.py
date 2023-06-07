@@ -1,5 +1,5 @@
 from person import Person
-from datetime import datetime
+import datetime
 
 
 class Employee(Person):
@@ -11,7 +11,7 @@ class Employee(Person):
     daily_food_allowance = 50
     daily_carfare = 20
 
-    pay_day = 4
+    pay_day = 10
 
     def __init__(
             self, first_name: str, last_name: str, birthdate: datetime, birthplace: str, blood_group: str,
@@ -41,18 +41,6 @@ class Employee(Person):
         company_domain = self.company.strip().replace(" ", "").lower()
         return f'{self.first_name.lower()}.{self.last_name.lower()}@{company_domain}.com'
 
-    # continue !!!
-    def next_pay_day(self):
-        today = datetime.today()
-        _pay_day = datetime(today.year, today.month, self.pay_day)
-
-        if _pay_day.isoweekday() < 6:
-            print('weekday')
-            if today > _pay_day:
-                pass
-        else:
-            print('weekend')
-
     def apply_raise(self):
         self.salary = int(self.salary * self.raise_amount)
 
@@ -62,24 +50,50 @@ class Employee(Person):
 
     @staticmethod
     def is_workday(day):
-        # weekday 5=Saturday, 6=Sunday
         if day.weekday() == 5 or day.weekday() == 6:
             return False
         return True
 
-    def __calculate_carfare(self):
+    def calculate_carfare(self):
         weekly_expense = self.daily_carfare * self.working_days
         monthly_expense = weekly_expense * 4
         return monthly_expense
 
-    def __calculate_food_allowance(self):
+    def calculate_food_allowance(self):
         weekly_expense = self.daily_food_allowance * self.working_days
         monthly_expense = weekly_expense * 4
         return monthly_expense
 
     def total_cost(self):
         # without insurance
-        return self.salary + self.__calculate_carfare() + self.__calculate_food_allowance()
+        return self.salary + self.calculate_carfare() + self.calculate_food_allowance()
+
+    def __first_weekday(self, day):
+        _pay_day = day
+
+        if day.weekday() == 5:
+            _pay_day = day + datetime.timedelta(days=2)
+            return _pay_day
+        elif day.weekday() == 6:
+            _pay_day = day + datetime.timedelta(days=1)
+            return _pay_day
+        else:
+            return _pay_day
+
+    def __next_month_date(self, pay_day):
+        if pay_day.month == 12:
+            return self.__first_weekday(datetime.datetime(pay_day.year + 1, 1, self.pay_day))
+        else:
+            return self.__first_weekday(datetime.datetime(pay_day.year, pay_day.month + 1, self.pay_day))
+
+    def next_pay_day(self, dt: datetime.datetime = datetime.datetime.today()):
+        _pay_day = datetime.datetime(dt.year, dt.month, self.pay_day)
+        first_pay_day = self.__first_weekday(_pay_day)
+
+        if dt > first_pay_day:
+            return self.__next_month_date(_pay_day)
+        else:
+            return first_pay_day
 
 
 class Developer(Employee):

@@ -1,11 +1,11 @@
-from datetime import datetime
+import datetime
 from person import Person
 from employee import Employee, Developer, Manager
 
 person1 = Person(
     first_name='Tony',
     last_name='Soprano',
-    birthdate=datetime(1980, 4, 15),
+    birthdate=datetime.datetime(1980, 4, 15),
     birthplace='New Jersey',
     blood_group='0 Rh+',
     identity_number='12345678'
@@ -14,7 +14,7 @@ person1 = Person(
 emp1 = Employee(
     first_name='Eric',
     last_name='Murphy',
-    birthdate=datetime(1993, 6, 18),
+    birthdate=datetime.datetime(1993, 6, 18),
     birthplace='New York',
     blood_group='A Rh-',
     identity_number='87654321',
@@ -26,7 +26,7 @@ emp1 = Employee(
 dev1 = Developer(
     first_name='David',
     last_name='Chaum',
-    birthdate=datetime(1990, 8, 12),
+    birthdate=datetime.datetime(1990, 8, 12),
     birthplace='Chicago',
     blood_group='AB Rh+',
     identity_number='12378456',
@@ -39,7 +39,7 @@ dev1 = Developer(
 mng1 = Manager(
     first_name='Michael',
     last_name='Scofield',
-    birthdate=datetime(1985, 1, 2),
+    birthdate=datetime.datetime(1985, 1, 2),
     birthplace='Chicago',
     blood_group='B Rh+',
     identity_number='11652003',
